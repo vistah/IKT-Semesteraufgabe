@@ -8,13 +8,18 @@
   top: 56px;
   background: white;
   text-align: center;
-  display: none;
+  /*display: none;*/
+  transform:TranslateY(100vH);
+  transition:transform 0.3s;
 }
 
 .main-image {
   max-width: 100%;
   margin: auto;
   display: block;
+}
+.whiteText {
+    color: white;
 }
 
 .floating-button {
@@ -28,4 +33,36 @@
 .input-section {
   display: block;
   margin: 10px auto;
+}
+
+.shared-moment-card.mdl-card {
+    margin-bottom: 20px;
+}
+
+@media (min-width: 600px) {
+    .shared-moment-card.mdl-card {
+        width: 60%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .shared-moment-card.mdl-card {
+        width: 45%;
+    }
+}
+
+.shared-moment-card .mdl-card__title {
+    height: 250px;
+}
+
+@media (min-height: 600px) {
+    .shared-moment-card .mdl-card__title {
+        height: 300px;
+    }
+}
+
+@media (min-height: 1200px) {
+    .shared-moment-card .mdl-card__title {
+        height: 380px;
+    }
 }

@@ -1,0 +1,43 @@
+{
+  "name": "PWA Semesteraufgabe",
+  "short_name": "PWA",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fcd4e4",
+  "description": "",
+  "lang": "de-DE",
+  "dir": "ltr",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+        "src": "/src/images/icons/icon-48x48.png",
+        "type": "image/png",
+        "sizes": "48x48"
+    },
+    {
+        "src": "/src/images/icons/icon-72x72.png",
+        "type": "image/png",
+        "sizes": "72x72"
+    },
+    {
+        "src": "/src/images/icons/icon-96x96.png",
+        "type": "image/png",
+        "sizes": "96x96"
+    },
+    {
+        "src": "/src/images/icons/icon-120x120.png",
+        "type": "image/png",
+        "sizes": "120x120"
+    },
+    {
+        "src": "/src/images/icons/icon-256x256.png",
+        "type": "image/png",
+        "sizes": "256x256"
+    },
+    {
+        "src": "/src/images/icons/icon-310x310.png",
+        "type": "image/png",
+        "sizes": "310x310"
+    }
+  ]
+}

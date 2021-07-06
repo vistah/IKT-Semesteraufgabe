@@ -1,3 +1,27 @@
-.mdl-button {
-  margin: 10px;
+.text-center {
+  text-align: center;
+}
+
+.drawer-option {
+  padding: 16px;
+}
+
+@media screen and (min-width: 990px){
+  .fixed-top
+  {
+    visibility: hidden;
+  }
+}
+
+.header
+{
+  margin-bottom: 10px;
+}
+.floating-button > button
+{
+  border-radius: 50%;
+}
+nav > a{
+  text-decoration: none;
+  color: black;
 }

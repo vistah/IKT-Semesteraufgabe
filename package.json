@@ -1,15 +1,26 @@
 {
-  "name": "IKT-PWA-01",
+  "name": "PWA",
   "version": "1.0.0",
-  "description": "Grundgerüst einer PWA",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "http-server -c-1"
   },
-  "keywords": ["pwa", "progressive", "web", "app", "ikt", "htw", "fiw"],
-  "author": "J. freiheit",
+  "keywords": [
+    "pwa",
+    "progressive",
+    "web",
+    "app",
+    "ikt",
+    "htw",
+    "fiw"
+  ],
+  "author": "Viktoria Stahlbaum",
   "license": "ISC",
   "devDependencies": {
     "http-server": "^0.12.3"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.5.0"
   }
 }

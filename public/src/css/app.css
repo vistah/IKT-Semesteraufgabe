@@ -1,7 +1,51 @@
 .text-center {
   text-align: center;
+  margin-top:20px
+}
+
+.page-content
+{
+    margin-bottom: 20px;
+    margin-top:20px;
+}
+
+.form-row
+{
+    margin-top:20px;
+}
+
+
+#post-btn
+{
+    width:100px;
+}
+
+#close-create-post-modal-btn
+{
+    width:100px;
 }
 
 .drawer-option {
   padding: 16px;
+}
+
+@media screen and (min-width: 990px){
+  .fixed-top
+  {
+    visibility: hidden;
+  }
+}
+
+.floating-button > button
+{
+  border-radius: 50%;
+}
+nav > a{
+  text-decoration: none;
+  color: black;
+}
+
+.toast-body
+{
+    color: black;
 }
