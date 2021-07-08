@@ -26,11 +26,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" href="/">Bücher</a>
+            <a class="nav-link active" href="/">Startseite</a>
             <a class="nav-link" href="/help">Hilfe</a>
           </div>
         </div>
-        <button type="button" class="btn btn-danger">Benachrichtigungen Ein</button>
       </nav>
     </header>
 
@@ -38,7 +37,7 @@
       <div class="collapse" id="navbarToggleExternalContent">
         <div class="bg-light p-4">
           <nav class="nav flex-column">
-            <a class="mdl-navigation__link" href="/">Bücher</a>
+            <a class="mdl-navigation__link" href="/">Startseite</a>
             <a class="mdl-navigation__link" href="/help">Hilfe</a>
           </nav>
         </div>
@@ -54,16 +53,14 @@
     </div>
     <main class="mdl-layout__content mat-typography">
       <div id="create-post">
+        <video id="player" autoplay></video>
+        <canvas id="canvas" width="320px" height="240px"></canvas>
+        <button class="btn btn-dark" id="capture-btn">Foto</button>
+        <div id="pick-image">
+          <h6>Bild auswählen</h6>
+          <input type="file" accept="image/*" id="image-picker">
+        </div>
         <form>
-          <!--<div class="input-section mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label">
-            <input class="mdl-textfield__input" type="text" id="title">
-            <label class="mdl-textfield__label" for="title" name="title">Titel</label>
-          </div>
-          <div class="input-section mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label"
-               id="manual-location">
-            <input class="mdl-textfield__input" type="text" id="location">
-            <label class="mdl-textfield__label" for="location" name="location">Ort</label>
-          </div>-->
             <div class="form-row">
               <div class="col-12 col-md-6 col-sm-12" style="margin-bottom:10px;" >
                 <input type="text" id="title" class="form-control" placeholder="Titel">
@@ -83,6 +80,10 @@
               <div class="col-12 col-md-6 col-sm-12" style="margin-bottom:10px;">
                 <input type="text" id="published" class="form-control" placeholder="Jahr der Veröffentlichung">
               </div>
+              <!--<div class="input-section">
+                <button class="btn btn-dark" type="button" id="location-btn">Location</button>
+                <div class="mdl-spinner mdl-js-spinner is-active" id="location-loader"></div>
+              </div>-->
             </div>
           <br>
           <div>
@@ -91,11 +92,10 @@
 
           <br>
           <div>
-            <button type="button" id="close-create-post-modal-btn" class="btn btn-dark">Close</button>
+            <button type="button" id="close-create-post-modal-btn" class="btn btn-dark">Schließen</button>
           </div>
         </form>
       </div>
-
       <img srcset="/src/images/bibliothek-lg.jpg 1200w,
              /src/images/bibliothek.jpg 900w,
              /src/images/bibliothek-sm.jpg 480w"
@@ -106,28 +106,15 @@
         <div id="shared-moments"></div>
       </div>
       <div class="floating-button">
-        <button type="button" class="btn btn-danger" id="share-image-button">+</button>
+        <button type="button" class="btn btn-danger" id="share-image-button">Hinzufügen</button>
       </div>
-
-      <!--<div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
-        <div class="mdl-snackbar__text"></div>
-        <button type="button" class="mdl-snackbar__action"></button>
-      </div>-->
-
-
-       <div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text">
-         <div class="toast-header">
-           <button type="button" class="ml-2 mb-1 close">
-           </button>
-         </div>
-       </div>
-
     </main>
   </div>
 </div>
 <script defer src="/src/js/material.min.js"></script>
 <script src="/src/js/idb.js"></script>
 <script src="/src/js/db.js"></script>
+<script src="/src/js/utility.js"></script>
 <script src="/src/js/app.js"></script>
 <script src="/src/js/feed.js"></script>
 </body>

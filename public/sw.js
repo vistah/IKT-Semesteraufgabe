@@ -1,8 +1,8 @@
 importScripts('/src/js/idb.js');
 importScripts('/src/js/db.js');
 
-const CURRENT_STATIC_CACHE = 'static-v7';
-const CURRENT_DYNAMIC_CACHE = 'dynamic-v7';
+const CURRENT_STATIC_CACHE = 'static-v11';
+const CURRENT_DYNAMIC_CACHE = 'dynamic-v11';
 
 const STATIC_FILES =[
     '/',
@@ -19,9 +19,10 @@ const STATIC_FILES =[
     'https://fonts.googleapis.com/css?family=Roboto:400,700',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://code.getmdl.io/1.3.0/material.blue_grey-red.min.css',
-    '/manifest.webmanifest'
+    '/manifest.webmanifest',
+    '/src/images'
 ];
-
+//Static Cache
 self.addEventListener('install', event => {
     console.log('service worker --> installing ...', event);
     event.waitUntil(
@@ -39,6 +40,7 @@ self.addEventListener('activate', event => {
             caches.keys()
                 .then( keyList => {
                     return Promise.all(keyList.map( key => {
+                    //Alter Cache wird gelöscht
                         if(key !== CURRENT_STATIC_CACHE && key !== CURRENT_DYNAMIC_CACHE) {
                             console.log('service worker --> old cache removed :', key);
                             return caches.delete(key);
@@ -79,7 +81,9 @@ self.addEventListener('fetch', event => {
     }
     else
     {
-    //Dynamischer Cache
+    //Dynamic Cache
+    //Nicht alles im dynamischen Cache, um die Anwendung nicht zu verlangsamen/ Nicht alle Objekte, die
+    // in den Cache sollten, sind uns bekannt.
         event.respondWith(
                 caches.match(event.request)
                     .then( response => {
@@ -99,6 +103,8 @@ self.addEventListener('fetch', event => {
         )}
 })
 
+//Synchronisation --> Ins Formular eingetragene Objekte werden, in die IndexedDB 'posts' übernommen.
+//Wenn die Anwendung offline ist, werden sie zunächst in die 'sync-posts' eingetragen. Beim online Gehen werden die Daten in die IndexedDB eingetragen.
 self.addEventListener('sync', event => {
     console.log('service worker --> background syncing ...', event);
     if(event.tag === 'sync-new-post') {
@@ -114,6 +120,7 @@ self.addEventListener('sync', event => {
                                 'Content-Type':'application/json',
                                 'Accept': 'application/json',
                             },
+                            //Inhalt
                             body: JSON.stringify({
                                 id:null,
                                 title: data.title,
@@ -122,7 +129,7 @@ self.addEventListener('sync', event => {
                                 genre: data.genre,
                                 publisher: data.publisher,
                                 published: data.published,
-                                image: '',
+                                image: data.image,
                             })
                         })
                         .then(response => {

@@ -1,3 +1,10 @@
+@media screen and (min-width: 990px){
+  .fixed-top
+  {
+    visibility: hidden;
+  }
+}
+
 .text-center {
   text-align: center;
   margin-top:20px
@@ -29,23 +36,7 @@
   padding: 16px;
 }
 
-@media screen and (min-width: 990px){
-  .fixed-top
-  {
-    visibility: hidden;
-  }
-}
-
-.floating-button > button
-{
-  border-radius: 50%;
-}
 nav > a{
   text-decoration: none;
   color: black;
-}
-
-.toast-body
-{
-    color: black;
 }

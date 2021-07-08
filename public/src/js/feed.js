@@ -2,6 +2,8 @@ let shareImageButton = document.querySelector('#share-image-button');
 let createPostArea = document.querySelector('#create-post');
 let closeCreatePostModalButton = document.querySelector('#close-create-post-modal-btn');
 let sharedMomentsArea = document.querySelector('#shared-moments');
+
+//Formularinhalt
 let form = document.querySelector('form');
 let titleInput = document.querySelector('#title');
 let authorInput = document.querySelector('#author');
@@ -10,12 +12,79 @@ let genreInput = document.querySelector('#genre');
 let publisherInput = document.querySelector('#publisher');
 let publishedInput = document.querySelector('#published');
 
+//Gerätezugriff
+let videoPlayer = document.querySelector('#player');
+let canvasElement = document.querySelector('#canvas');
+let captureButton = document.querySelector('#capture-btn');
+let imagePicker = document.querySelector('#image-picker');
+let imagePickerArea = document.querySelector('#pick-image');
+let base64String= '';
+
+function initializeMedia() {
+    if(!('mediaDevices' in navigator))
+    {
+        navigator.mediaDevices = {};
+    }
+
+    if(!('getUserMedia' in navigator.mediaDevices))
+    {
+        navigator.mediaDevices.getUserMedia = function(constrains)
+        {
+            //Polyfill webkitUserMedia/ mozGetUserMedia
+            let getUserMedia = navigator.webkitUserMedia || navigator.mozGetUserMedia;
+
+            if(!getUserMedia)
+            {
+                return Promise.reject(new Error('getUserMedia is not implemented'));
+            }
+            return new Promise((resolve, reject) => {
+                getUserMedia.call(navigator, constrains, resolve, reject);
+            })
+        }
+    }
+
+    navigator.mediaDevices.getUserMedia({video:true})
+        .then(stream => {
+            videoPlayer.srcObject = stream;
+            videoPlayer.style.display = 'block';
+        })
+        .catch( err => {
+            imagePickerArea.style.display = 'block';
+        });
+}
+
+captureButton.addEventListener('click', event => {
+    canvasElement.style.display = 'block';
+    videoPlayer.style.display = 'none';
+    captureButton.style.display = 'none';
+    let context = canvasElement.getContext('2d');
+    context.drawImage(videoPlayer, 0, 0, canvas.width, videoPlayer.videoHeight / (videoPlayer.videoWidth / canvas.width));
+    videoPlayer.srcObject.getVideoTracks().forEach( track => {
+        track.stop();
+    });
+    let picture = dataURItoBlob(canvasElement.toDataURL());
+    console.log('picture', picture);
+    blobToBase64(picture)
+        .then( res => {
+            let base64StringWithTag = res;
+            base64String = base64StringWithTag.substr(base64StringWithTag.indexOf(',')+1)
+            console.log('base64String', base64String);
+            }
+        )
+});
+
 function openCreatePostModal() {
   createPostArea.style.transform = 'translateY(0)';
+  initializeMedia();
 }
 
 function closeCreatePostModal() {
   createPostArea.style.transform = 'translateY(100vH)';
+
+  //Wird der Zugriff auf die Kamera verwehrt, kann man ein Bild hochladen.
+  imagePickerArea.style.display = 'none';
+  videoPlayer.style.display = 'none';
+  canvasElement.style.display = 'none';
 }
 
 shareImageButton.addEventListener('click', openCreatePostModal);
@@ -106,7 +175,7 @@ fetch('http://localhost:3000/posts')
       updateUI(data);
     });
 
-/*if('indexedDB' in window) {
+if('indexedDB' in window) {
     readAllData('posts')
         .then( data => {
             if(!networkDataReceived) {
@@ -114,7 +183,7 @@ fetch('http://localhost:3000/posts')
                 updateUI(data);
             }
         })
-}*/
+}
 
 
 function sendDataToBackend() {
@@ -132,7 +201,7 @@ function sendDataToBackend() {
             genre: genreInput.value,
             publisher: publisherInput.value,
             published: publishedInput.value,
-            image: '',
+            image: base64String,
             })
     })
     .then( response => {
@@ -145,12 +214,23 @@ function sendDataToBackend() {
     });
 }
 
+imagePicker.addEventListener('change', event => {
+    let picture = event.target.files[0];
+    blobToBase64(picture)
+        .then( res => {
+                let base64StringWithTag = res;
+                base64String = base64StringWithTag.substr(base64StringWithTag.indexOf(',')+1)
+                console.log('base64String', base64String);
+            }
+        )
+});
+
 
 form.addEventListener('submit', event => {
     event.preventDefault(); // nicht absenden und neu laden
 
     if (titleInput.value.trim() === '' || authorInput.value.trim() === '' || locationInput.value.trim()=== '' || genreInput.value.trim() === '' || publishedInput.value.trim() === '' || publisherInput.value.trim() === '') {
-        alert('Bitte Titel und Autor angeben!')
+        alert('Alle Felder müssen befüllt werden!')
         return;
     }
 
@@ -167,16 +247,17 @@ form.addEventListener('submit', event => {
                     genre: genreInput.value,
                     publisher: publisherInput.value,
                     published: publishedInput.value,
+                    image: base64String
                 };
                 writeData('sync-posts', post)
                     .then(() => {
                         return sw.sync.register('sync-new-post');
                     })
-                    .then(() => {
+                    /*.then(() => {
                         let snackbarContainer = new MaterialSnackbar(document.querySelector('#confirmation-toast'));
                         let data = {message: 'Eingabe zum Synchronisieren gespeichert!', timeout: 8000};
                         snackbarContainer.showSnackbar(data);
-                    });
+                    });*/
             });
     }
     else

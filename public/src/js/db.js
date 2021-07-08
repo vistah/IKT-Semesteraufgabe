@@ -32,7 +32,7 @@ function readAllData(st) {
             })
     }
 //Löscht alle Daten in der DB
-    function clearAllData(st) {
+function clearAllData(st) {
     return db
             .then( dbPosts => {
                 let tx = dbPosts.transaction(st, 'readwrite');

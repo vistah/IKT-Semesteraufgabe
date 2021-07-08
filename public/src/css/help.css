@@ -1,11 +1,3 @@
-.text-center {
-  text-align: center;
-}
-
-.drawer-option {
-  padding: 16px;
-}
-
 @media screen and (min-width: 990px){
   .fixed-top
   {
@@ -13,15 +5,31 @@
   }
 }
 
+.text-center a
+{
+    text-decoration:none;
+}
+.nav
+{
+    display: inline-block;
+}
 .header
 {
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
+
 .floating-button > button
 {
   border-radius: 50%;
 }
+
 nav > a{
   text-decoration: none;
   color: black;
+}
+
+.button-home{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
